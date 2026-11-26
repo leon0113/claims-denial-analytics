@@ -75,7 +75,8 @@ CREATE TABLE
         appeal_status TEXT NOT NULL DEFAULT 'NONE' CHECK (
             appeal_status IN ('NONE', 'APPEALED', 'OVERTURNED', 'UPHELD')
         ),
-        outstanding_amount NUMERIC(12, 2) NOT NULL DEFAULT 0 CHECK (outstanding_amount >= 0)
+        outstanding_amount NUMERIC(12, 2) NOT NULL DEFAULT 0 CHECK (outstanding_amount >= 0),
+        expected_insurance NUMERIC(12, 2) NOT NULL DEFAULT 0 CHECK (expected_insurance >= 0),
     );
 
 CREATE TABLE
