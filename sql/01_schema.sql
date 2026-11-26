@@ -86,6 +86,6 @@ CREATE TABLE
         procedure_code TEXT NOT NULL,
         charge_amount NUMERIC(12, 2) NOT NULL CHECK (charge_amount >= 0),
         insurance_paid NUMERIC(12, 2) NOT NULL DEFAULT 0 CHECK (insurance_paid >= 0),
-        transferred_to_patient NUMERIC(12, 2) NOT NULL DEFAULT 0 CHECK (transferred_to_patient >= 0),
+        patient_paid NUMERIC(12, 2) NOT NULL DEFAULT 0 CHECK (patient_paid >= 0),
         UNIQUE (claim_id, charge_id)
     );
