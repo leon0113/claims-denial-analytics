@@ -43,7 +43,7 @@ VALUES
         TRUE
     ),
     (
-        'CO-10',
+        'CO-11',
         'Diagnosis inconsistent with procedure',
         'Coding',
         TRUE
