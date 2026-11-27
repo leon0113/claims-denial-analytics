@@ -48,11 +48,28 @@ def count_rows(engine):
             n = conn.execute(text(f"SELECT COUNT(*) FROM {table}")).scalar()
             print(f"  {table:<20} {n:>7,}")
             
+
+
+# new: database validation func
+def validate_in_db(engine):
+    sql = (SQL_DIR / "04_validation.sql").read_text(encoding="utf-8")
+    with engine.connect() as conn:
+        rows = conn.execute(text(sql)).fetchall()
+
+    print("Database checks:")
+    failures = 0
+    for name, count in rows:
+        failures += count
+        result = "ok" if count == 0 else "FAILED"
+        print(f"  {name:<45} {count:>5}  {result}")
+    return failures
+
+
+
             
 def step(name):
     print(f"\n[{time.strftime('%H:%M:%S')}] {name}")
     
-
 
 def main():
     start = time.perf_counter()
@@ -76,11 +93,15 @@ def main():
     step("5/5 loading facts")
     load_facts(engine, sim, lines)
     
+    step("6/6 validating loaded data")
+    if validate_in_db(engine) > 0:
+        raise SystemExit("Database checks failed. See the report above.")
+    
     
     count_rows(engine)
     print(f"created in {time.perf_counter() - start}sec")
     
-    
+
 
 if __name__ == "__main__":
     main()
